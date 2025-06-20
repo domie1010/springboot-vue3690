@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.DiquyiqingmeiriguanliDao">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        a.id as id
+        ,a.jinriquezhen_number as jinriquezhenNumber
+        ,a.leijiquezhen_number as leijiquezhenNumber
+        ,a.jinrizhiyu_number as jinrizhiyuNumber
+        ,a.leijizhiyu_number as leijizhiyuNumber
+        ,a.jinrisiwang_number as jinrisiwangNumber
+        ,a.leijisiwang_number as leijisiwangNumber
+        ,a.suoshu_time as suoshuTime
+        ,a.insert_time as insertTime
+        ,a.create_time as createTime
+    </sql>
+    <select id="selectListView" parameterType="map" resultType="com.entity.view.DiquyiqingmeiriguanliView" >
+        SELECT
+        <include refid="Base_Column_List" />
+
+--         级联表的字段
+
+        FROM diquyiqingmeiriguanli  a
+
+        <where>
+            <if test="params.ids != null">
+                and a.id in
+                <foreach item="item" index="index" collection="params.ids" open="(" separator="," close=")">
+                #{item}
+                </foreach>
+            </if>
+            <if test="params.jinriquezhenNumberStart != null and params.jinriquezhenNumberStart != ''">
+                <![CDATA[  and a.jinriquezhen_number >= #{params.jinriquezhenNumberStart}   ]]>
+            </if>
+            <if test="params.jinriquezhenNumberEnd != null and params.jinriquezhenNumberEnd != ''">
+                <![CDATA[  and a.jinriquezhen_number <= #{params.jinriquezhenNumberEnd}   ]]>
+            </if>
+             <if test="params.jinriquezhenNumber != null and params.jinriquezhenNumber != ''">
+                and a.jinriquezhen_number = #{params.jinriquezhenNumber}
+             </if>
+            <if test="params.leijiquezhenNumberStart != null and params.leijiquezhenNumberStart != ''">
+                <![CDATA[  and a.leijiquezhen_number >= #{params.leijiquezhenNumberStart}   ]]>
+            </if>
+            <if test="params.leijiquezhenNumberEnd != null and params.leijiquezhenNumberEnd != ''">
+                <![CDATA[  and a.leijiquezhen_number <= #{params.leijiquezhenNumberEnd}   ]]>
+            </if>
+             <if test="params.leijiquezhenNumber != null and params.leijiquezhenNumber != ''">
+                and a.leijiquezhen_number = #{params.leijiquezhenNumber}
+             </if>
+            <if test="params.jinrizhiyuNumberStart != null and params.jinrizhiyuNumberStart != ''">
+                <![CDATA[  and a.jinrizhiyu_number >= #{params.jinrizhiyuNumberStart}   ]]>
+            </if>
+            <if test="params.jinrizhiyuNumberEnd != null and params.jinrizhiyuNumberEnd != ''">
+                <![CDATA[  and a.jinrizhiyu_number <= #{params.jinrizhiyuNumberEnd}   ]]>
+            </if>
+             <if test="params.jinrizhiyuNumber != null and params.jinrizhiyuNumber != ''">
+                and a.jinrizhiyu_number = #{params.jinrizhiyuNumber}
+             </if>
+            <if test="params.leijizhiyuNumberStart != null and params.leijizhiyuNumberStart != ''">
+                <![CDATA[  and a.leijizhiyu_number >= #{params.leijizhiyuNumberStart}   ]]>
+            </if>
+            <if test="params.leijizhiyuNumberEnd != null and params.leijizhiyuNumberEnd != ''">
+                <![CDATA[  and a.leijizhiyu_number <= #{params.leijizhiyuNumberEnd}   ]]>
+            </if>
+             <if test="params.leijizhiyuNumber != null and params.leijizhiyuNumber != ''">
+                and a.leijizhiyu_number = #{params.leijizhiyuNumber}
+             </if>
+            <if test="params.jinrisiwangNumberStart != null and params.jinrisiwangNumberStart != ''">
+                <![CDATA[  and a.jinrisiwang_number >= #{params.jinrisiwangNumberStart}   ]]>
+            </if>
+            <if test="params.jinrisiwangNumberEnd != null and params.jinrisiwangNumberEnd != ''">
+                <![CDATA[  and a.jinrisiwang_number <= #{params.jinrisiwangNumberEnd}   ]]>
+            </if>
+             <if test="params.jinrisiwangNumber != null and params.jinrisiwangNumber != ''">
+                and a.jinrisiwang_number = #{params.jinrisiwangNumber}
+             </if>
+            <if test="params.leijisiwangNumberStart != null and params.leijisiwangNumberStart != ''">
+                <![CDATA[  and a.leijisiwang_number >= #{params.leijisiwangNumberStart}   ]]>
+            </if>
+            <if test="params.leijisiwangNumberEnd != null and params.leijisiwangNumberEnd != ''">
+                <![CDATA[  and a.leijisiwang_number <= #{params.leijisiwangNumberEnd}   ]]>
+            </if>
+             <if test="params.leijisiwangNumber != null and params.leijisiwangNumber != ''">
+                and a.leijisiwang_number = #{params.leijisiwangNumber}
+             </if>
+            <if test=" params.suoshuTimeStart != '' and params.suoshuTimeStart != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(a.suoshu_time) >= UNIX_TIMESTAMP(#{params.suoshuTimeStart}) ]]>
+            </if>
+            <if test=" params.suoshuTimeEnd != '' and params.suoshuTimeEnd != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(a.suoshu_time) <= UNIX_TIMESTAMP(#{params.suoshuTimeEnd}) ]]>
+            </if>
+            <if test=" params.insertTimeStart != '' and params.insertTimeStart != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(a.insert_time) >= UNIX_TIMESTAMP(#{params.insertTimeStart}) ]]>
+            </if>
+            <if test=" params.insertTimeEnd != '' and params.insertTimeEnd != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(a.insert_time) <= UNIX_TIMESTAMP(#{params.insertTimeEnd}) ]]>
+            </if>
+
+        </where>
+
+        order by a.${params.orderBy} desc 
+    </select>
+
+</mapper>
